@@ -255,11 +255,11 @@ public class ExtensionUtils {
         Double nowRad = 0.0;
         Double minRad = 360.0;
 
-        Double maxLong = 0.0;
+        Double minLong = 999999.0;
         Double nowLong = 0.0;
 
         int nowi = 0;
-        int maxi = 0;
+        int mini = 0;
         List<Integer> maxList = new ArrayList<Integer>();
 
         for (String str :
@@ -275,12 +275,12 @@ public class ExtensionUtils {
 
         for (Integer i : maxList) {
             nowLong = PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(i).split(":")[0]), Double.parseDouble(rimList.get(i).split(":")[1])));
-            if (nowLong > maxLong) {
-                maxLong = nowLong;
-                maxi = i;
+            if (nowLong < minLong) {
+                minLong = nowLong;
+                mini = i;
             }
         }
-        return new Point(Double.parseDouble(rimList.get(maxi).split(":")[0]), Double.parseDouble(rimList.get(maxi).split(":")[1]));
+        return new Point(Double.parseDouble(rimList.get(mini).split(":")[0]), Double.parseDouble(rimList.get(mini).split(":")[1]));
     }
 
     /**
@@ -295,13 +295,13 @@ public class ExtensionUtils {
         double k2;
         int nowi = 0;
         int maxi = 0;
-        Double maxLong = 0.0;
+        Double minLong = 9999999.0;
         Double nowLong = 0.0;
         List<Integer> minList = new ArrayList<Integer>();
 
         for (String str:rimList) {
             k2 = (p2.getY() - Double.parseDouble(str.split(":")[1])) / (p2.getX() - Double.parseDouble(str.split(":")[0]));
-            if(Math.abs(k2 - k1) <= 1){
+            if(Math.abs(k2 - k1) <= 0.5){
                 minList.add(nowi);
                 nowi++;
             }
@@ -309,12 +309,27 @@ public class ExtensionUtils {
 
         for (Integer i : minList) {
             nowLong = PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(i).split(":")[0]), Double.parseDouble(rimList.get(i).split(":")[1])));
-            if (nowLong > maxLong) {
-                maxLong = nowLong;
+            if (nowLong < minLong) {
+                minLong = nowLong;
                 maxi = i;
             }
         }
 
         return new Point(Double.parseDouble(rimList.get(maxi).split(":")[0]), Double.parseDouble(rimList.get(maxi).split(":")[1]));
+    }
+
+    /**
+     * 功能描述: 根据外边获取脚尖的点位置(经验性)
+     * @Param: [rimList]
+     * @Return: com.boe.posture.domain.Point
+     * @Author: 12252
+     * @Date: 2020/7/19 19:06
+     */
+    public static Point getFeetPoint(List<String> rimList) {
+        Double minPointLeftY = 2000000.0;
+        Double minPointLeftX = 0.0;
+        Double maxPointRightY = 2000000.0;
+        Double maxPointRightX = 0.0;
+        return null;
     }
 }
