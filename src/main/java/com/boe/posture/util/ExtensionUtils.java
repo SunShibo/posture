@@ -242,4 +242,79 @@ public class ExtensionUtils {
         }
         return cp;
     }
+
+    /**
+     * 功能描述: 获取肩膀的点位
+     * @Param: [p1, p2, lineList]
+     * @Return: com.boe.posture.domain.Point
+     * @Author: 12252
+     * @Date: 2020/7/19 15:47
+     */
+    public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList) {
+        Double lineRad = PointsUtils.getRad(p1, p2);
+        Double nowRad = 0.0;
+        Double minRad = 360.0;
+
+        Double maxLong = 0.0;
+        Double nowLong = 0.0;
+
+        int nowi = 0;
+        int maxi = 0;
+        List<Integer> maxList = new ArrayList<Integer>();
+
+        for (String str :
+                rimList) {
+            nowRad = PointsUtils.getRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
+            nowRad = Math.abs(nowRad) + Math.abs(lineRad);
+            nowRad = Math.abs(nowRad - 20.0);
+            if (Math.abs(nowRad) < 1) {
+                maxList.add(nowi);
+            }
+            nowi++;
+        }
+
+        for (Integer i : maxList) {
+            nowLong = PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(i).split(":")[0]), Double.parseDouble(rimList.get(i).split(":")[1])));
+            if (nowLong > maxLong) {
+                maxLong = nowLong;
+                maxi = i;
+            }
+        }
+        return new Point(Double.parseDouble(rimList.get(maxi).split(":")[0]), Double.parseDouble(rimList.get(maxi).split(":")[1]));
+    }
+
+    /**
+     * 功能描述: 获取头部点位
+     * @Param: [p1, p2, lineList]
+     * @Return: com.boe.posture.domain.Point
+     * @Author: 12252
+     * @Date: 2020/7/19 15:57
+     */
+    public static Point getHeadPoint(Point p1,Point p2,List<String> rimList) {
+        double k1 = PointsUtils.getLineSlope(p1,p2);
+        double k2;
+        int nowi = 0;
+        int maxi = 0;
+        Double maxLong = 0.0;
+        Double nowLong = 0.0;
+        List<Integer> minList = new ArrayList<Integer>();
+
+        for (String str:rimList) {
+            k2 = (p2.getY() - Double.parseDouble(str.split(":")[1])) / (p2.getX() - Double.parseDouble(str.split(":")[0]));
+            if(Math.abs(k2 - k1) <= 1){
+                minList.add(nowi);
+                nowi++;
+            }
+        }
+
+        for (Integer i : minList) {
+            nowLong = PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(i).split(":")[0]), Double.parseDouble(rimList.get(i).split(":")[1])));
+            if (nowLong > maxLong) {
+                maxLong = nowLong;
+                maxi = i;
+            }
+        }
+
+        return new Point(Double.parseDouble(rimList.get(maxi).split(":")[0]), Double.parseDouble(rimList.get(maxi).split(":")[1]));
+    }
 }

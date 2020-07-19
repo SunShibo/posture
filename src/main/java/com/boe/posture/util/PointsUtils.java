@@ -85,7 +85,7 @@ public class PointsUtils {
     }
 
     /**
-     * 功能描述: 取得两个点与中间点构成的两条线的角的度数(总是锐角)
+     * 功能描述: 取得两个点与中间点构成的两条线的角的度数
      * 参数: p2作为中间点,求p2与p1、p3构成的两个射线的角的度数
      *
      * @Param: [p1, p2, p3]
@@ -155,6 +155,70 @@ public class PointsUtils {
     }
 
     /**
+     * 功能描述: 取得两个点与中间点构成的两条线的角的度数(总是锐角)
+     * 参数: p2作为中间点,求p2与p1、p3构成的两个射线的角的度数
+     *
+     * @Param: [p1, p2, p3]
+     * @Return: java.lang.Double
+     * @Author: 12252
+     * @Date: 2020/7/10 17:10
+     */
+    public static Double getTwoLineAcuteAngle(Point p1, Point p2, Point p3) {
+        //点一和点二构成的直线的X,Y轴差值
+        Double l1X = p2.getX() - p1.getX();
+        Double l1Y = p2.getY() - p1.getY();
+
+        //点三和点二构成的直线的X,Y轴差值
+        Double l2X = p2.getX() - p3.getX();
+        Double l2Y = p2.getY() - p3.getY();
+
+        if (l1X == 0) {
+            if (l2X == 0) {
+                System.out.println("两条线段都垂直于X轴,所以没有交点");
+                return 0.0;
+            } else {
+                System.out.println("点一与点二形成的线段垂直于X轴");
+                return 90 - Math.abs(getRad(p2, p3));
+            }
+        } else if (l2X == 0) {
+            if (l1X == 0) {
+                System.out.println("两条线段都垂直于X轴,所以没有交点");
+                return 0.0;
+            } else {
+                System.out.println("点三与点二形成的线段垂直于X轴");
+                return 90 - Math.abs(getRad(p2, p1));
+            }
+        } else if (l1Y == 0) {
+            if (l2Y == 0) {
+                System.out.println("两条线段都垂直于Y轴,所以没有交点");
+                return 0.0;
+            } else {
+                System.out.println("点一与点二形成的线段垂直于Y轴");
+                return Math.abs(getRad(p2, p3));
+            }
+        } else if (l2Y == 0) {
+            if (l1Y == 0) {
+                System.out.println("两条线段都垂直于Y轴,所以没有交点");
+                return 0.0;
+            } else {
+                System.out.println("点三与点二形成的线段垂直于Y轴");
+                return Math.abs(getRad(p2, p1));
+            }
+        } else {
+            Double k1 = l1Y / l1X;
+            Double k2 = l2Y / l2X;
+            System.out.println(k1);
+            System.out.println(k2);
+            if (k1 * k2 == -1.0) {
+                return 90.0;
+            } else {
+                System.out.println(k1 * k2);
+                return Math.atan((k1 - k2) / (1 + k1 * k2)) / PI * 180;
+            }
+        }
+    }
+
+    /**
      * 功能描述: 取得两点与中间点构成的两条线的角的度数(自动判断锐/钝角)  未完成勿调用
      * 参数: p2作为中间点,求p2与p1、p3构成的两个射线的角的度数
      * @Param: [p1, p2, p3]
@@ -170,5 +234,16 @@ public class PointsUtils {
         System.out.println(newPoint1.getLocation());
         System.out.println(newPoint2.getLocation());
         return null;
+    }
+
+    /**
+     * 功能描述: 获取两点构成的直线的斜率
+     * @Param: [p1, p2]
+     * @Return: java.lang.Double
+     * @Author: 12252
+     * @Date: 2020/7/19 16:01
+     */
+    public static Double getLineSlope(Point p1,Point p2) {
+        return (p1.getY()-p2.getY()) / (p1.getX() - p2.getX());
     }
 }
