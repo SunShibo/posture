@@ -332,4 +332,31 @@ public class ExtensionUtils {
         Double maxPointRightX = 0.0;
         return null;
     }
+
+    /**
+     * 功能描述: 给出两点求第二个点的固定垂直线的两点坐标
+     * @Param: [p1, p2, length]
+     * @Return: java.util.List<com.boe.posture.domain.Point>
+     * @Author: 12252
+     * @Date: 2020/7/19 19:52
+     */
+    public static List<Point> getTwoPointPerpendicularWithLength(Point p1,Point p2,Double length) {
+        List<Point> pointList = new ArrayList<Point>();
+        if (p1.getX()==p2.getX()){
+            pointList.add(new Point(p2.getX(),p2.getY() + length));
+            pointList.add(new Point(p2.getX(),p2.getY() - length));
+        }else if (p1.getY() == p2.getY()){
+            pointList.add(new Point(p2.getX() - length,p2.getY()));
+            pointList.add(new Point(p2.getX() + length,p2.getY()));
+        }else if(p1.getX()>p2.getX()){
+            Point p3 = new Point((p2.getX() - length * (p1.getY() - p2.getY()) / PointsUtils.getLineLong(p1,p2)),p2.getY() + length * (p1.getX() - p2.getX()) / PointsUtils.getLineLong(p1,p2));
+            pointList.add(p3);
+            pointList.add(getScalePoint(p3,p2,200));
+        }else if(p1.getX()<p2.getX()){
+            Point p3 = new Point((p2.getX() - length * (p1.getY() - p2.getY()) / PointsUtils.getLineLong(p1,p2)),p2.getY() - length * (p1.getX() - p2.getX()) / PointsUtils.getLineLong(p1,p2));
+            pointList.add(p3);
+            pointList.add(getScalePoint(p3,p2,200));
+        }
+        return pointList;
+    }
 }
