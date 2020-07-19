@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 【用户】 -->
+<mapper namespace="com.boe.posture.dao.UserDao">
+    <select id="getList" parameterType="java.lang.String" resultType="com.boe.posture.domain.UserInfoBO">
+        SELECT id,ut,`name`,create_time,highRiskCount  FROM `user_image` WHERE ut=#{code}
+    </select>
+
+    <select id="getInfo" parameterType="java.lang.Integer" resultType="com.boe.posture.domain.AssessmentResultBO">
+        SELECT * FROM `user_image` WHERE id=#{id}
+    </select>
+
+    <insert id="addInfo" parameterType="map" >
+        INSERT INTO `posture`.`user_image` ( `ut`, `name`, `out_oss`, `head_image_oss`, `chest_image_oss`,
+         `leg_image_oss`, `pelvis_image_oss`, `spine_image_oss`, `headHeel_L`, `headHeel_R`,
+          `highLowShoulder_L`, `highLowShoulder_R`, `pelvicTilt_L`, `pelvicTilt_R`, `scoliosis_L`,
+           `scoliosis_R`, `o_leftleg_r`, `o_rightleg_r`, `x_leftleg_r`, `x_rightleg_r`,
+            `create_time`, `head`, `back`, `waist`, `knee`,
+            `analytical_diagram`, `head_forerake`, `pelvis_forerake`, `hunchback`, `knee1`,
+             `highRiskCount`)
+              VALUES (#{ut}, #{name}, #{out_oss}, #{head_image_oss}, #{chest_image_oss},
+               #{leg_image_oss}, #{pelvis_image_oss}, #{spine_image_oss}, #{headHeel_L}, #{headHeel_R},
+               #{highLowShoulder_L}, #{highLowShoulder_R}, #{pelvicTilt_L}, #{pelvicTilt_R}, #{scoliosis_L},
+                #{scoliosis_R}, #{o_leftleg_r}, #{o_rightleg_r}, #{x_leftleg_r}, #{x_rightleg_r},
+                now(), #{head}, #{back}, #{waist}, #{knee},
+                 #{analytical_diagram}, #{headForerake}, #{pelvisForerake}, #{hunchback}, #{knee1},
+                  #{highRiskCount});
+    </insert>
+
+
+
+</mapper>
