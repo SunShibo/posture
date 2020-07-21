@@ -252,7 +252,7 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/19 15:47
      */
-    public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList,String direction) {
+    /*public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList,String direction) {
         double lineYRad = PointsUtils.getYRad(p1, p2);
         double lineXRad = PointsUtils.getRad(p1,p2);
         double nowYRad = 0.0;
@@ -301,7 +301,7 @@ public class ExtensionUtils {
         }
         System.out.println(minLong);
         return new Point(Double.parseDouble(rimList.get(mini).split(":")[0]), Double.parseDouble(rimList.get(mini).split(":")[1]));
-    }
+    }*/
 
     /**
      * 功能描述: 获取头部点位
@@ -350,28 +350,82 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/19 19:06
      */
-    public static Point getFeetPoint(List<String> rimList) {
+    public static List<Point> getFeetPoint(List<String> rimList) {
         double leftMin = 0.0;
         double minx = 900000.0;
         double maxx = 0.0;
-        double nowX = 0.0;
+        double nowx = 0.0;
+        double midX = 0.0;
+
+        double maxly = 0.0;
+        double maxry = 0.0;
+        double nowy = 0.0;
+
+        List<Point> lList = new ArrayList<Point>();
+        List<Point> rList = new ArrayList<Point>();
+
 
         for (String str:rimList) {
-            nowX = Double.parseDouble(str.split(":")[0]);
-
-            if(nowX<minx){
-                minx = nowX;
+            nowx = Double.parseDouble(str.split(":")[0]);
+            if(nowx<minx){
+                minx = nowx;
             }
-            if(nowX>maxx){
-                maxx = nowX;
+            if(nowx>maxx){
+                maxx = nowx;
+            }
+        }
+        midX = (minx + minx) / 2;
+        nowx = 0.0;
+
+        boolean changeFlag = false;
+
+        for (String str :rimList) {
+            nowx = Double.parseDouble(str.split(":")[0]);
+            nowy = Double.parseDouble(str.split(":")[1]);
+            if(nowx <= midX){
+                if (nowy > maxry){
+                    maxry = nowy;
+                }else if (nowy == maxry){
+                    lList.add(new Point(nowx,nowy));
+                }
             }
 
-
+            if (nowx >= midX){
+                if (nowy > maxly) {
+                    maxly = nowy;
+                }else if(nowy == maxly){
+                    rList.add(new Point(nowx,nowy));
+                }
+            }
         }
 
+        double minlx = 9999999.0;
+        double maxlx = 0;
+        for (Point p :lList) {
+            if (p.getX()<minlx){
+                minlx = p.getX();
+            }
+            if(p.getX()>maxlx){
+                maxlx = p.getX();
+            }
+        }
 
+        List<Point> returnList = new ArrayList<Point>();
+        returnList.add(new Point((minlx + maxlx) / 2, lList.get(0).getY()));
 
-        return null;
+        double minrx = 9999999.0;
+        double maxrx = 0;
+        for (Point p :rList) {
+            if (p.getX()<minrx){
+                minlx = p.getX();
+            }
+            if(p.getX()>maxrx){
+                maxlx = p.getX();
+            }
+        }
+        returnList.add(new Point((minrx + maxrx) / 2, rList.get(0).getY()));
+
+        return returnList;
     }
 
     /**
