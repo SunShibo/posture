@@ -130,12 +130,36 @@ public class CalculateService {
         Point rightOxter = ExtensionUtils.getScalePoint(rightShoulder, new Point(rightShoulderX, rightShoulderY),200);
         resultMap.put("right_oxter",rightOxter);
 
-        //腹部
-        //resultMap.put("right_abdomen",leftHip);
-        //resultMap.put("left_abdomen",leftHip);
-        Point margin = ExtensionUtils.getMargin(binaryImg, new Point( (leftHipX-rightHipX) / 2 + rightHipX , rightHipY), rightKneeY);
+
+        Point hipScale = ExtensionUtils.getScalePoint(new Point(leftHipX, leftHipY), new Point(rightHipX, rightHipY),50);
+        Point kneeScale = ExtensionUtils.getScalePoint(new Point(leftKneeX, leftKneeY), new Point(rightKneeX, rightKneeY),50);
+        Point crotch = ExtensionUtils.getScalePoint(hipScale,kneeScale,30);
         //裆部
-        //resultMap.put("crotch",rightWristL);
+        resultMap.put("crotch",crotch);
+
+        //腹部
+        Point shouolderScale = ExtensionUtils.getScalePoint(new Point(leftShoulderX, leftShoulderY), new Point(rightShoulderX, rightShoulderY),50);
+        Point scalePoint = ExtensionUtils.getScalePoint(shouolderScale,hipScale,84.21);
+        Point leftAbdomen   = ExtensionUtils.getVerticalPointWithRim(shouolderScale, scalePoint, line);
+        Point rightAbdomen   = ExtensionUtils.getScalePoint(leftAbdomen, scalePoint, 200);
+
+        if(!(leftAbdomen.getX() >  scalePoint.getX() )) {  // 左
+           Point pointItem =   leftAbdomen;
+            leftAbdomen=rightAbdomen;
+            rightAbdomen=pointItem;
+        }
+
+        Double lineLong = PointsUtils.getLineLong(leftWristL, new Point(leftWristX, leftWristY));
+
+        if (leftAbdomen.getXInt() >= leftWristX) {
+            leftAbdomen = new Point(leftAbdomen.getXInt() - Math.abs(lineLong) * 2 , leftAbdomen.getY());
+        }
+        if (rightAbdomen.getXInt() <= rightWristX) {
+            rightAbdomen = new Point(rightAbdomen.getXInt() +  Math.abs(lineLong) * 2 , rightAbdomen.getY());
+        }
+
+        resultMap.put("right_abdomen",rightAbdomen.toIntPoint());
+        resultMap.put("left_abdomen",leftAbdomen.toIntPoint());
 
         //左臀
         Point leftHip = ExtensionUtils.getVerticalPointWithRim(new Point(leftKneeX,leftKneeY), new Point(leftHipX, (leftKneeY -leftHipY)/4 + leftHipY ), line);
@@ -185,7 +209,10 @@ public class CalculateService {
 
 
     //    g.drawString("•", t.getXInt(),t.getYInt()) ;
-        g.drawString("•", margin.getXInt(),margin.getYInt()) ;
+        g.drawString("•", shouolderScale.getXInt(),shouolderScale.getYInt()) ;
+        g.drawString("•", rightAbdomen.getXInt(),rightAbdomen.getYInt()) ;
+        g.drawString("•", leftAbdomen.getXInt(),leftAbdomen.getYInt()) ;
+
       //  g.drawString("•", feetPoint.get(1).getXInt(),feetPoint.get(1).getYInt()) ;
 
         ImageIO.write(copy,"jpg",new File("C:\\Users\\Administrator\\Desktop\\test\\1.jpg"));

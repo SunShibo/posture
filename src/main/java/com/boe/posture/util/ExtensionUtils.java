@@ -71,13 +71,13 @@ public class ExtensionUtils {
      */
     public static Point getExtensionPointWithLength(Point pa, Point pb, double length) {
         Point point = new Point();
-        if (pa.getX().equals(pb.getX())) {
+        if (pa.getX()==(pb.getX())) {
             if (pa.getY() > pb.getY()) {
                 point.setLocation(pa.getX(), pb.getY() - length);
             } else {
                 point.setLocation(pa.getX(), pb.getY() + length);
             }
-        } else if (pa.getY().equals(pb.getY())) {
+        } else if (pa.getY()==(pb.getY())) {
             if (pa.getX() > pb.getX()) {
                 point.setLocation(pb.getX() - length,pa.getY());
             } else {
