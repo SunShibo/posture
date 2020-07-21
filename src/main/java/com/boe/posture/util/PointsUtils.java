@@ -33,12 +33,18 @@ public class PointsUtils {
      * @Date: 2020/7/10 16:51
      */
     public static Double getRad(Point p1, Point p2) {
-        Double dy = Math.abs(p1.getY() - p2.getY());
-        Double z = getLineLong(p1, p2);
-        if ((p1.getX() > p2.getX() && p1.getY() < p2.getY()) || (p1.getX() < p2.getX() && p1.getY() > p2.getY())) {
-            z = -z;
+        if (p1.getX() == p2.getX()) {
+            return 90.0;
+        } else if (p1.getY() == p2.getY()) {
+            return 0.0;
+        } else {
+            Double dy = Math.abs(p1.getY() - p2.getY());
+            Double z = getLineLong(p1, p2);
+            if ((p1.getX() > p2.getX() && p1.getY() < p2.getY()) || (p1.getX() < p2.getX() && p1.getY() > p2.getY())) {
+                z = -z;
+            }
+            return Math.asin(dy / z) / PI * 180;
         }
-        return Math.asin(dy / z) / PI * 180;
     }
 
     /**
@@ -50,11 +56,11 @@ public class PointsUtils {
      * @Date: 2020/7/10 16:51
      */
     public static Double getYRad(Point p1, Point p2) {
-        double xRad = getRad(p1,p2);
+        double xRad = getRad(p1, p2);
         double yRad = 0.0;
-        if (xRad>0){
+        if (xRad > 0) {
             yRad = -(90 - Math.abs(xRad));
-        }else{
+        } else {
             yRad = 90 - Math.abs(xRad);
         }
         return yRad;
@@ -221,6 +227,7 @@ public class PointsUtils {
     /**
      * 功能描述: 取得两点与中间点构成的两条线的角的度数(自动判断锐/钝角)  未完成勿调用
      * 参数: p2作为中间点,求p2与p1、p3构成的两个射线的角的度数
+     *
      * @Param: [p1, p2, p3]
      * @Return: java.lang.Double
      * @Author: 12252
@@ -229,8 +236,8 @@ public class PointsUtils {
     public static Double getTwoLineAngle2(Point p1, Point p2, Point p3) {
         Point newPoint1 = new Point();
         Point newPoint2 = new Point();
-        newPoint1.setLocation(p1.getX() - p2.getX(),p1.getY() - p2.getY());
-        newPoint2.setLocation(p3.getX() - p2.getX(),p3.getY() - p2.getY());
+        newPoint1.setLocation(p1.getX() - p2.getX(), p1.getY() - p2.getY());
+        newPoint2.setLocation(p3.getX() - p2.getX(), p3.getY() - p2.getY());
         System.out.println(newPoint1.getLocation());
         System.out.println(newPoint2.getLocation());
         return null;
@@ -238,12 +245,13 @@ public class PointsUtils {
 
     /**
      * 功能描述: 获取两点构成的直线的斜率
+     *
      * @Param: [p1, p2]
      * @Return: java.lang.Double
      * @Author: 12252
      * @Date: 2020/7/19 16:01
      */
-    public static Double getLineSlope(Point p1,Point p2) {
-        return (p1.getY()-p2.getY()) / (p1.getX() - p2.getX());
+    public static Double getLineSlope(Point p1, Point p2) {
+        return (p1.getY() - p2.getY()) / (p1.getX() - p2.getX());
     }
 }
