@@ -2,6 +2,7 @@ package com.boe.posture.util;
 
 import com.boe.posture.domain.Point;
 import com.sun.istack.internal.NotNull;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -251,7 +252,7 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/19 15:47
      */
-    public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList) {
+    public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList,@DefaultValue("right") String direction) {
         Double lineRad = PointsUtils.getYRad(p1, p2);
         Double nowRad = 0.0;
         Double minRad = 360.0;
@@ -266,12 +267,23 @@ public class ExtensionUtils {
         for (String str :
                 rimList) {
             nowRad = PointsUtils.getYRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
-            if(lineRad>0){
-                nowRad = lineRad - nowRad - 20.0;
+            if(lineRad>0 && nowRad>0){
+                nowRad = lineRad - nowRad - 20;
+            }else if(lineRad<0 && nowRad<0){
+                nowRad = nowRad - nowRad -20;
+            }else if(lineRad == 0) {
+                if (direction == "right"){
+                    nowRad = 70 + nowRad;
+                }else{
+                    nowRad = 70 - nowRad;
+                }
             }else{
-                nowRad = nowRad - lineRad - 20.0;
+                nowRad = 180.0 - Math.abs(nowRad) - Math.abs(lineRad) - 20.0;
             }
-            if (Math.abs(nowRad) < 1 && Math.abs(nowRad) > -1) {
+
+            nowRad = lineRad - nowRad - 20.0;
+
+            if (Math.abs(nowRad) < 1) {
                 maxList.add(nowi);
             }
             nowi++;
@@ -335,11 +347,23 @@ public class ExtensionUtils {
      * @Date: 2020/7/19 19:06
      */
     public static Point getFeetPoint(List<String> rimList) {
-        Double minPointLeftY = 2000000.0;
-        Double minPointLeftX = 0.0;
-        Double maxPointRightY = 2000000.0;
-        Double maxPointRightX = 0.0;
+        Double leftMin = 0.0;
+        Double minx = 900000.0;
+        Double maxx = 0.0;
+        Double nowX = 0.0;
 
+        for (String str:rimList) {
+            nowX = Double.parseDouble(str.split(":")[0]);
+
+            if(nowX<minx){
+                minx = nowX;
+            }
+            if(nowX>maxx){
+                maxx = nowX;
+            }
+
+
+        }
 
 
 
