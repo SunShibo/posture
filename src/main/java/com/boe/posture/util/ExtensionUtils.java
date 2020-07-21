@@ -25,7 +25,7 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/10 16:50
      */
-    public static Double getX(Point pointA, Point pointB, Double py) {
+    public static double getX(Point pointA, Point pointB, double py) {
         return ((py - pointA.getY()) * (pointB.getX() - pointA.getX()) / (pointB.getY() - pointA.getY())) + pointA.getX();
     }
 
@@ -37,7 +37,7 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/10 16:50
      */
-    public static Double getY(Point pointA, Point pointB, Double px) {
+    public static double getY(Point pointA, Point pointB, double px) {
         return ((px - pointA.getX()) * (pointB.getY() - pointA.getY()) / (pointB.getX() - pointA.getX())) + pointA.getY();
     }
 
@@ -65,7 +65,7 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/10 16:50
      */
-    public static Point getExtensionPointWithLength(Point pa, Point pb, Double length) {
+    public static Point getExtensionPointWithLength(Point pa, Point pb, double length) {
         Point point = new Point();
         if (pa.getX().equals(pb.getX())) {
             if (pa.getY() > pb.getY()) {
@@ -141,12 +141,12 @@ public class ExtensionUtils {
      * @Date: 2020/7/10 16:49
      */
     public static Point getVerticalPointWithRim(Point p1, Point p2, List<String> rimList) {
-        Double lineRad = PointsUtils.getRad(p1, p2);
-        Double nowRad = 0.0;
-        Double minRad = 360.0;
+        double lineRad = PointsUtils.getRad(p1, p2);
+        double nowRad = 0.0;
+        double minRad = 360.0;
 
-        Double minLong = 2000000.0;
-        Double nowLong = 0.0;
+        double minLong = 2000000.0;
+        double nowLong = 0.0;
 
         int nowi = 0;
         int mini = 0;
@@ -163,7 +163,7 @@ public class ExtensionUtils {
             nowi++;
         }
 
-        for (Integer i : minList) {
+        for (int i : minList) {
             nowLong = PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(i).split(":")[0]), Double.parseDouble(rimList.get(i).split(":")[1])));
             if (nowLong < minLong) {
                 minLong = nowLong;
@@ -200,9 +200,9 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/10 16:48
      */
-    public static Point getScalePoint(Point p1, Point p2, @NotNull Double scale) {
-        Double cx = Math.abs(Math.abs(p2.getX()) - Math.abs(p1.getX())) * scale / 100;
-        Double cy = Math.abs(Math.abs(p2.getY()) - Math.abs(p1.getY())) * scale / 100;
+    public static Point getScalePoint(Point p1, Point p2, @NotNull double scale) {
+        double cx = Math.abs(Math.abs(p2.getX()) - Math.abs(p1.getX())) * scale / 100;
+        double cy = Math.abs(Math.abs(p2.getY()) - Math.abs(p1.getY())) * scale / 100;
         Point cp = new Point();
 
         if (p1.getX() < p2.getX()) {
@@ -226,9 +226,9 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/10 16:49
      */
-    public static Point getScalePoint(Point p1, Point p2, @NotNull Integer scale) {
-        Double cx = Math.abs(Math.abs(p2.getX()) - Math.abs(p1.getX())) * scale / 100;
-        Double cy = Math.abs(Math.abs(p2.getY()) - Math.abs(p1.getY())) * scale / 100;
+    public static Point getScalePoint(Point p1, Point p2, @NotNull int scale) {
+        double cx = Math.abs(Math.abs(p2.getX()) - Math.abs(p1.getX())) * scale / 100;
+        double cy = Math.abs(Math.abs(p2.getY()) - Math.abs(p1.getY())) * scale / 100;
         Point cp = new Point();
 
         if (p1.getX() < p2.getX()) {
@@ -253,12 +253,12 @@ public class ExtensionUtils {
      * @Date: 2020/7/19 15:47
      */
     public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList,@DefaultValue("right") String direction) {
-        Double lineRad = PointsUtils.getYRad(p1, p2);
-        Double nowRad = 0.0;
-        Double minRad = 360.0;
+        double lineRad = PointsUtils.getYRad(p1, p2);
+        double nowRad = 0.0;
+        double minRad = 360.0;
 
-        Double minLong = 999999.0;
-        Double nowLong = 0.0;
+        double minLong = 999999.0;
+        double nowLong = 0.0;
 
         int nowi = 0;
         int mini = 0;
@@ -299,7 +299,7 @@ public class ExtensionUtils {
             nowi++;
         }
 
-        for (Integer i : maxList) {
+        for (int i : maxList) {
             nowLong = PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(i).split(":")[0]), Double.parseDouble(rimList.get(i).split(":")[1])));
             if (nowLong < minLong) {
                 minLong = nowLong;
@@ -319,12 +319,12 @@ public class ExtensionUtils {
      * @Date: 2020/7/21 12:09
      */
     public static Point getHeadOutside(Point p1,Point p2,List<String> rimList) {
-        Double lineRad = PointsUtils.getRad(p1, p2);
-        Double nowRad = 0.0;
-        Double minRad = 360.0;
+        double lineRad = PointsUtils.getRad(p1, p2);
+        double nowRad = 0.0;
+        double minRad = 360.0;
 
-        Double minLong = 999999.0;
-        Double nowLong = 0.0;
+        double minLong = 999999.0;
+        double nowLong = 0.0;
 
         int nowi = 0;
         int mini = 0;
@@ -342,7 +342,7 @@ public class ExtensionUtils {
             nowi++;
         }
 
-        for (Integer i : maxList) {
+        for (int i : maxList) {
             nowLong = PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(i).split(":")[0]), Double.parseDouble(rimList.get(i).split(":")[1])));
             if (nowLong < minLong) {
                 minLong = nowLong;
@@ -359,10 +359,10 @@ public class ExtensionUtils {
      * @Date: 2020/7/19 19:06
      */
     public static Point getFeetPoint(List<String> rimList) {
-        Double leftMin = 0.0;
-        Double minx = 900000.0;
-        Double maxx = 0.0;
-        Double nowX = 0.0;
+        double leftMin = 0.0;
+        double minx = 900000.0;
+        double maxx = 0.0;
+        double nowX = 0.0;
 
         for (String str:rimList) {
             nowX = Double.parseDouble(str.split(":")[0]);
@@ -389,7 +389,7 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/19 19:52
      */
-    public static List<Point> getTwoPointPerpendicularWithLength(Point p1,Point p2,Double length) {
+    public static List<Point> getTwoPointPerpendicularWithLength(Point p1,Point p2,double length) {
         List<Point> pointList = new ArrayList<Point>();
         if (p1.getX()==p2.getX()){
             pointList.add(new Point(p2.getX(),p2.getY() + length));
