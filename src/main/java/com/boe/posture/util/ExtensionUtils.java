@@ -268,7 +268,7 @@ public class ExtensionUtils {
 
             nowRad = PointsUtils.getYRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
             nowRad = lineRad - nowRad - 20.0;
-            if (Math.abs(nowRad) < 1) {
+            if (Math.abs(nowRad) < 1 && Math.abs(nowRad) > -1) {
                 maxList.add(nowi);
             }
             nowi++;
@@ -309,7 +309,7 @@ public class ExtensionUtils {
             nowRad = PointsUtils.getRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
 
             nowRad = Math.abs(nowRad) - Math.abs(lineRad);
-            if (Math.abs(nowRad) < 1) {
+            if (Math.abs(nowRad) < 1 && Math.abs(nowRad) > -1) {
                 maxList.add(nowi);
             }
             nowi++;
@@ -324,9 +324,6 @@ public class ExtensionUtils {
         }
         return new Point(Double.parseDouble(rimList.get(mini).split(":")[0]), Double.parseDouble(rimList.get(mini).split(":")[1]));
     }
-
-
-
     /**
      * 功能描述: 根据外边获取脚尖的点位置(经验性)
      * @Param: [rimList]
