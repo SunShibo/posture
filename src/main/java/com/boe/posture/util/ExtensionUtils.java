@@ -265,9 +265,12 @@ public class ExtensionUtils {
 
         for (String str :
                 rimList) {
-
             nowRad = PointsUtils.getYRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
-            nowRad = lineRad - nowRad - 20.0;
+            if(lineRad>0){
+                nowRad = lineRad - nowRad - 20.0;
+            }else{
+                nowRad = nowRad - lineRad - 20.0;
+            }
             if (Math.abs(nowRad) < 1 && Math.abs(nowRad) > -1) {
                 maxList.add(nowi);
             }
