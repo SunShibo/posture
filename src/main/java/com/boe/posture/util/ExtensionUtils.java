@@ -269,25 +269,15 @@ public class ExtensionUtils {
             nowRad = PointsUtils.getYRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
             if(lineRad>0 && nowRad>0){
                 nowRad = lineRad - nowRad - 20;
-
-                System.out.println("1");
             }else if(lineRad<0 && nowRad<0){
                 nowRad = nowRad - nowRad -20;
-                System.out.println("2");
-
             }else if(lineRad == 0) {
                 if (direction == "right"){
                     nowRad = 70 + nowRad;
-                    System.out.println("3");
-
                 }else{
                     nowRad = 70 - nowRad;
-                    System.out.println("4");
-
                 }
             }else{
-                System.out.println("5");
-
                 nowRad = 180.0 - Math.abs(nowRad) - Math.abs(lineRad) - 20.0;
             }
 
@@ -295,6 +285,7 @@ public class ExtensionUtils {
 
             if (Math.abs(nowRad) < 1) {
                 maxList.add(nowi);
+                System.out.println(PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(nowi).split(":")[0]), Double.parseDouble(rimList.get(nowi).split(":")[1]))));
             }
             nowi++;
         }
