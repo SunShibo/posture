@@ -252,9 +252,11 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/19 15:47
      */
-    public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList,@DefaultValue("right") String direction) {
-        double lineRad = PointsUtils.getYRad(p1, p2);
-        double nowRad = 0.0;
+    public static Point getShoulderOutside(Point p1,Point p2,List<String> rimList,String direction) {
+        double lineYRad = PointsUtils.getYRad(p1, p2);
+        double lineXRad = PointsUtils.getRad(p1,p2);
+        double nowYRad = 0.0;
+        double nowXRad = 0.0;
         double minRad = 360.0;
 
         double minLong = 999999.0;
@@ -266,22 +268,23 @@ public class ExtensionUtils {
 
         for (String str :
                 rimList) {
-            nowRad = PointsUtils.getYRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
-            if(lineRad>0 && nowRad>0){
-                nowRad = lineRad - nowRad - 20;
-            }else if(lineRad<0 && nowRad<0){
-                nowRad = nowRad - nowRad -20;
-            }else if(lineRad == 0) {
+            nowYRad = PointsUtils.getYRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
+            nowXRad = PointsUtils.getRad(p2, new Point(Double.parseDouble(str.split(":")[0]), Double.parseDouble(str.split(":")[1])));
+            if(lineYRad>0 && nowYRad>0){
+                nowYRad = lineYRad - nowYRad - 20;
+            }else if(lineYRad<0 && nowYRad<0){
+                nowYRad = nowYRad - nowYRad -20;
+            }else if(lineYRad == 0){
                 if (direction == "right"){
-                    nowRad = 70 + nowRad;
+                    nowYRad = 70 + nowYRad;
                 }else{
-                    nowRad = 70 - nowRad;
+                    nowYRad = 70 - nowYRad;
                 }
             }else{
-                nowRad = 180.0 - Math.abs(nowRad) - Math.abs(lineRad) - 20.0;
+                nowYRad = 180.0 - Math.abs(nowXRad) - Math.abs(lineXRad) - 20.0;
             }
 
-            if (Math.abs(nowRad) < 1) {
+            if (Math.abs(nowYRad) < 1) {
                 maxList.add(nowi);
                 System.out.println(PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(nowi).split(":")[0]), Double.parseDouble(rimList.get(nowi).split(":")[1]))));
             }
