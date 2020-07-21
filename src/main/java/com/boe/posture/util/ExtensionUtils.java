@@ -281,8 +281,6 @@ public class ExtensionUtils {
                 nowRad = 180.0 - Math.abs(nowRad) - Math.abs(lineRad) - 20.0;
             }
 
-            nowRad = lineRad - nowRad - 20.0;
-
             if (Math.abs(nowRad) < 1) {
                 maxList.add(nowi);
                 System.out.println(PointsUtils.getLineLong(p2, new Point(Double.parseDouble(rimList.get(nowi).split(":")[0]), Double.parseDouble(rimList.get(nowi).split(":")[1]))));
