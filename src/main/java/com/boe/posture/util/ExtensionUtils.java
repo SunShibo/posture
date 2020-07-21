@@ -325,7 +325,7 @@ public class ExtensionUtils {
                 mini = i;
             }
         }
-        return new Point(Double.parseDouble(rimList.get(mini).split(":")[0]), Double.parseDouble(rimList.get(mini).split(":")[1]));
+        return new Point(Double.parseDouble(rimList.get(mini).split(":")[0]), Double.parseDouble(rimList.get(mini).split(":")[1]) - 3.0);
     }
     /**
      * 功能描述: 根据外边获取脚尖的点位置(经验性)
@@ -339,6 +339,10 @@ public class ExtensionUtils {
         Double minPointLeftX = 0.0;
         Double maxPointRightY = 2000000.0;
         Double maxPointRightX = 0.0;
+
+
+
+
         return null;
     }
 
