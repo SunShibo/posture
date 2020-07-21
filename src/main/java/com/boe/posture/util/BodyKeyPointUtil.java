@@ -1,11 +1,9 @@
 package com.boe.posture.util;
 
 import org.json.JSONObject;
-import sun.misc.BASE64Encoder;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -13,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BodyKeyPointUtil {
-    //FIXME 这里需要替换成正式的Key 现在为测试使用并不稳定随时可能被停止
+    //FIXME 这里需要替换成正式的Key
     //百度AI 开放平台
     private static String clientId = "sbjRmx1aqUBE1FRicpKfh4M1";
     private static String clientSecret = "7T6E3sajEAqkA38klRVGaXusNYB0QbZC";

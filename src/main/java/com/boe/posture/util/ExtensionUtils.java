@@ -4,8 +4,12 @@ import com.boe.posture.domain.Point;
 import com.sun.istack.internal.NotNull;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 功能描述: 所有延长线或延长点的方法类
@@ -350,7 +354,7 @@ public class ExtensionUtils {
      * @Author: 12252
      * @Date: 2020/7/19 19:06
      */
-    public static List<Point> getFeetPoint(List<String> rimList) {
+    public static List<Point> getFeetPoint(Point point,List<String> rimList) {
         double leftMin = 0.0;
         double minx = 900000.0;
         double maxx = 0.0;
@@ -427,6 +431,30 @@ public class ExtensionUtils {
 
         return returnList;
     }
+
+    /**
+     *  获取人体下 边
+     *
+     * @return
+     */
+    public static Point getMargin(BufferedImage image, Point point,int low) {
+        Set<Integer>  set = new HashSet<>();
+        int returnY=0;
+        for (int y = point.getYInt();  y  < low ; y++ ) {
+            int rgb = image.getRGB(point.getXInt(), y);
+            set.add(rgb);
+            if(rgb==-16777216){
+                returnY=y;
+                break;
+            }
+        }
+        for (Integer i:set) {
+            System.out.println(i);
+        }
+        return new Point(point.getX(),returnY);
+    }
+
+
 
     /**
      * 功能描述: 给出两点求第二个点的固定垂直线的两点坐标

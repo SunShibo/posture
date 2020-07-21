@@ -138,4 +138,40 @@ public class Point {
     public void setY(Double y) {
         this.y = y;
     }
+
+
+    public IntPoint toIntPoint(){
+        return new IntPoint(this.x,this.y);
+    }
+
+
+    public class IntPoint{
+        private Integer x;
+        private Integer y;
+
+
+        public IntPoint(Double x, Double y) {
+            this.x = x.intValue();
+            this.y = y.intValue();
+        }
+
+        public Integer getX() {
+            return x;
+        }
+
+        public void setX(Integer x) {
+            this.x = x;
+        }
+
+        public Integer getY() {
+            return y;
+        }
+
+        public void setY(Integer y) {
+            this.y = y;
+        }
+    }
+
+
+
 }
