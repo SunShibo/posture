@@ -35,14 +35,6 @@ public class CalculateService {
 
         int headX = MathUtil.getInt(personInfo.getTop_head().getX()); //头顶
         int headY = MathUtil.getInt(personInfo.getTop_head().getY());
-        int rightEyeX = MathUtil.getInt(personInfo.getRight_eye().getX()); //右眼
-        int rightEyeY = MathUtil.getInt(personInfo.getRight_eye().getY());
-        int leftEyeX = MathUtil.getInt(personInfo.getLeft_eye().getX()); //左眼
-        int leftEyeY = MathUtil.getInt(personInfo.getLeft_eye().getY());
-        int noseX = MathUtil.getInt(personInfo.getNose().getX());      //鼻子
-        int noseY = MathUtil.getInt(personInfo.getNose().getY());
-        int rightEarX = MathUtil.getInt(personInfo.getRight_ear().getX()); //右耳
-        int rightEarY = MathUtil.getInt(personInfo.getRight_ear().getY()) + 10;
         int leftEarX = MathUtil.getInt(personInfo.getLeft_ear().getX()); //左耳
         int leftEarY = MathUtil.getInt(personInfo.getLeft_ear().getY()) + 10;
         int neckX = MathUtil.getInt(personInfo.getNeck().getX()); //脖子
@@ -72,8 +64,6 @@ public class CalculateService {
         int leftAnkleX = MathUtil.getInt(personInfo.getLeft_ankle().getX()); //左脚踝
         int leftAnkleY = MathUtil.getInt(personInfo.getLeft_ankle().getY());
 
-
-        BufferedImage copy = ImageUtil.deepCopy(image);
         //人体分割
         String base64 = BodyKeyPointUtil.bodySeg(image);
         JSONObject resultJson = JsonUtils.getJsonObject4JavaPOJO(base64);
@@ -83,7 +73,7 @@ public class CalculateService {
 
         //头顶
         Point topHead=ExtensionUtils.getHeadOutside(new Point(neckX,neckY),new Point(headX,headY),line);
-        resultMap.put("head_top",topHead);
+        resultMap.put("head_top",topHead.toIntPoint());
         //脖子
         Point leftNeck = ExtensionUtils.getVerticalPointWithRim(new Point(leftEarX, leftEarY), new Point(neckX, neckY), line);
         Point rightNeck = ExtensionUtils.getScalePoint(leftNeck, new Point(neckX, neckY),200);
@@ -124,18 +114,18 @@ public class CalculateService {
 
         //左腋下
         Point leftOxter = ExtensionUtils.getScalePoint(leftShoulder, new Point(leftShoulderX, leftShoulderY),200);
-        resultMap.put("left_oxter",leftOxter);
+        resultMap.put("left_oxter",leftOxter.toIntPoint());
 
         //右腋下
         Point rightOxter = ExtensionUtils.getScalePoint(rightShoulder, new Point(rightShoulderX, rightShoulderY),200);
-        resultMap.put("right_oxter",rightOxter);
+        resultMap.put("right_oxter",rightOxter.toIntPoint());
 
 
         Point hipScale = ExtensionUtils.getScalePoint(new Point(leftHipX, leftHipY), new Point(rightHipX, rightHipY),50);
         Point kneeScale = ExtensionUtils.getScalePoint(new Point(leftKneeX, leftKneeY), new Point(rightKneeX, rightKneeY),50);
         Point crotch = ExtensionUtils.getScalePoint(hipScale,kneeScale,30);
         //裆部
-        resultMap.put("crotch",crotch);
+        resultMap.put("crotch",crotch.toIntPoint());
 
         //腹部
         Point shouolderScale = ExtensionUtils.getScalePoint(new Point(leftShoulderX, leftShoulderY), new Point(rightShoulderX, rightShoulderY),50);
@@ -203,19 +193,6 @@ public class CalculateService {
 
         resultMap.put("line",line);
 
-        Graphics2D g = copy.createGraphics();
-        g.setColor(Color.red);
-        //List<Point> feetPoint = ExtensionUtils.getFeetPoint(line);
-
-
-    //    g.drawString("•", t.getXInt(),t.getYInt()) ;
-        g.drawString("•", shouolderScale.getXInt(),shouolderScale.getYInt()) ;
-        g.drawString("•", rightAbdomen.getXInt(),rightAbdomen.getYInt()) ;
-        g.drawString("•", leftAbdomen.getXInt(),leftAbdomen.getYInt()) ;
-
-      //  g.drawString("•", feetPoint.get(1).getXInt(),feetPoint.get(1).getYInt()) ;
-
-        ImageIO.write(copy,"jpg",new File("C:\\Users\\Administrator\\Desktop\\test\\1.jpg"));
         return  resultMap;
     }
 
@@ -260,7 +237,6 @@ public class CalculateService {
         int leftKneeY = MathUtil.getInt(personInfo.getLeft_knee().getY());
         int rightAnkleX = MathUtil.getInt(personInfo.getRight_ankle().getX()); //右脚踝
         int rightAnkleY = MathUtil.getInt(personInfo.getRight_ankle().getY());
-        BufferedImage copy = ImageUtil.deepCopy(image);
         //人体分割
         String base64 = BodyKeyPointUtil.bodySeg(image);
         JSONObject resultJson = JsonUtils.getJsonObject4JavaPOJO(base64);
@@ -270,7 +246,7 @@ public class CalculateService {
 
         //头顶
         Point topHead=ExtensionUtils.getHeadOutside(new Point(leftEarX,leftEarX),new Point(headX,headY),line);
-        resultMap.put("top_head",topHead);
+        resultMap.put("top_head",topHead.toIntPoint());
         //耳朵
         resultMap.put("left_ear",new Point(neckX,neckY));
         //脖子
