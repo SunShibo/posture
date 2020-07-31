@@ -6,10 +6,7 @@ import com.boe.posture.util.*;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,13 +191,6 @@ public class CalculateService {
         resultMap.put("line",line);
 
         return  resultMap;
-    }
-
-    public static void main(String[] args) throws Exception {
-        BufferedImage img = ImageIO.read(new File("C:\\Users\\Administrator\\Desktop\\test\\test.jpg"));
-        CalculateService c = new CalculateService();
-        c.front(img);
-       // front(img);
     }
 
 
